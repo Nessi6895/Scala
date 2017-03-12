@@ -20,8 +20,8 @@ object Hello{
   case class Node(id: Long, parent: Option[Long], var children: List[Node] = Nil)
 
   def findAllChildren(nodes: List[Node]): List[Node] = {
-    for(nodeOld <- nodes; nodeYoung <- nodes if nodeYoung != nodeOld){
-      if(nodeOld.id == nodeYoung.parent) nodeOld.children = (nodeOld.children.to[ListBuffer] += nodeYoung).toList
+    for(node1 <- nodes if(node1.parent != None); node2 <- nodes if(Some(node2.id) == node1.parent)){
+      node2.children = node2.children + List(node1)
     }
     for(node <- nodes if node.parent == None) yield node
   }
